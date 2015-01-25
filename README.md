@@ -1,0 +1,2 @@
+# studyingR
+probability dists study
