@@ -19,29 +19,33 @@ all(A+B == B+A)
 
 
 source("probGraph.r")
+
 #биномиальное распределение
-p <- seq(1, 7, 2)/10; 
-n <- 12; 
+p <- seq(1, 7, 2)/10; # вероятность успеха
+n <- 12;# число испытаний  
 x <- seq(0, n)
-P <- sapply(p, function(pp) dbinom(x, n, pp))
-F <- sapply(p, function(pp) pbinom(x, n, pp))
+binomProbDist <- sapply(p, function(pp) dbinom(x, n, pp))
+binomCDF      <- sapply(p, function(pp) pbinom(x, n, pp))
+
 l <- sapply(p, function(pp) sprintf("B(%.0f, %.3g)", n, pp))
 
-dgraph(x, P, l); pgraph(x, F, l)
+discreteDistGraph(x, binomProbDist, l) 
+
+discreteCDFGraph(x, binomCDF, l)
 
 
 
 # Графики плотности вероятностей и функции нормально распределённой с.в.:
 # a, s - параметры нормального распределения; 
 # x - возможные значения с.в.; 
-# f, F - значения плотности вероятностей и функции распределения с.в. 
+# normalProbDensity, normalCDF - значения плотности вероятностей и функции распределения с.в. 
 # l - подписи к графикам.
 a <- 0; 
 s <- c(1/4, 1/2, 1, 2); 
 x <- seq(-6, 6, len=300)
-f <- sapply(s, function(ss) dnorm(x, a, ss))
-F <- sapply(s, function(ss) pnorm(x, a, ss))
+normalProbDensity <- sapply(s, function(ss) dnorm(x, a, ss))
+normalCDF <- sapply(s, function(ss) pnorm(x, a, ss))
 l <- sapply(s, function(ss) sprintf("N(%.3g, %.3g)", a, ss))
 
-cgraph(x, f, l); 
-fgraph(x, F, l)
+continuousDistGraph(x, normalProbDensity, l); 
+continuousCDFGraph(x, normalCDF, l)
